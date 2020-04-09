@@ -89,13 +89,16 @@ let animals = [
         description: 'Evil creatures',
         animalId: '12'
     },
-]
+];
+
+const searchIt = (term) => (item) => item.type.toLowerCase().includes(term.toLowerCase());
 
 class Animals extends Component {
     state = {
         animals: animals,
         likes: [],
-        dislikes: []
+        dislikes: [],
+        searchTerm: ''
     }
 
     likeHandler = (id) => {
@@ -124,21 +127,28 @@ class Animals extends Component {
 
     discardHandler = (id) => {
         const discardedAnimal = [...this.state.animals].filter(({animalId}) => animalId !== id);
-        this.setState({ animals: discardedAnimal });
-    }
+        const updateLike = [...this.state.likes].filter(({animalId}) => animalId !== id);
+        const updateDislike = [...this.state.dislikes].filter(({animalId}) => animalId !== id);
+
+        this.setState({ animals: discardedAnimal, likes: updateLike, dislikes: updateDislike });
+    };
 
     deleteLikeHandler = (id) => {
         const deletedAnimal = [...this.state.likes].filter(({animalId}) => animalId !== id);
-        this.setState({ likes: deletedAnimal});
-    }
+        this.setState({ likes: deletedAnimal });
+    };
 
     deleteDislikeHandler = (id) => {
         const deletedAnimal = [...this.state.dislikes].filter(({animalId}) => animalId !== id);
-        this.setState({ dislikes: deletedAnimal});
-    }
+        this.setState({ dislikes: deletedAnimal });
+    };
+
+    handleChange = (event) => {
+        this.setState({ searchTerm: event.target.value });
+    };
 
     render() {
-        let animal = this.state.animals.map(({image, type, name, description, animalId}) => {
+        let animal = this.state.animals.filter(searchIt(this.state.searchTerm)).map(({image, type, name, description, animalId}) => {
             return (
                 <div key={animalId}>
                     <Card 
@@ -156,9 +166,22 @@ class Animals extends Component {
 
         return (
             <div className='page'>
-            <div className='animal'>
-                {animal}
-            </div>
+                <div style={{display: 'flex', flexDirection: 'column'}}>
+                    <div>
+                        <form className="ui form search">
+                            <div className="field">
+                            <input 
+                                onChange={this.handleChange} 
+                                type="text" 
+                                placeholder="Search..." 
+                                value={this.state.searchTerm} />
+                            </div>
+                        </form>
+                    </div>
+                    <div className='animal'>
+                        {animal}
+                    </div>
+                </div>
             <Sidebars 
                 likes={this.state.likes}
                 dislikes={this.state.dislikes}

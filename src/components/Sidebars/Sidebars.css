@@ -1,0 +1,21 @@
+img {
+    width: 200px;
+}
+
+.sidecard {
+    width: 300px;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    color: white;
+    background-color: black;
+}
+
+.side {
+    width: 700px;
+    margin: 20px;
+}
+
+h3 {
+    text-align: center;
+}
