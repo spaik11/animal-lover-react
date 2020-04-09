@@ -1,8 +1,12 @@
 import React, { Component } from 'react';
+import Card from '../Card/Card';
+import Sidebars from '../Sidebars/Sidebars';
+import './Animals.css';
+
 
 let animals = [
     { 
-        image: './images/trex/jpg',
+        image: './images/trex.jpg',
         type: 'dinosaur',
         name: 'Tyrannosaurus',
         description: 'Tyrannosaurus is a genus of coelurosaurian theropod dinosaur. The species Tyrannosaurus rex (rex meaning "king" in Latin), often called T. rex or colloquially T-Rex, is one of the most well-represented of the large theropods.',
@@ -54,7 +58,7 @@ let animals = [
         image: './images/dolphin.png',
         type: 'fish',
         name: 'Dolphin',
-        description: 'Dolphin is a common name of aquatic mammals within the infraorder Cetacea. The term dolphin usually refers to the extant families Delphinidae (the oceanic dolphins), Platanistidae (the Indian river dolphins), Iniidae (the New World river dolphins), and Pontoporiidae (the brackish dolphins), and the extinct Lipotidae (baiji or Chinese river dolphin). There are 40 extant species named as dolphins.',
+        description: 'Dolphins are small-toothed cetaceans easily recognizable by their curved mouths, which give them a permanent “smile.” There are 36 dolphin species, found in every ocean. Most dolphins are marine and live in the ocean or brackish waters along coastlines. ',
         animalId: '8'
     },
     { 
@@ -88,36 +92,82 @@ let animals = [
 ]
 
 class Animals extends Component {
+    state = {
+        animals: animals,
+        likes: [],
+        dislikes: []
+    }
+
+    likeHandler = (id) => {
+        let likeState = [...this.state.likes];
+        let dislikeState = [...this.state.dislikes];
+
+        if (likeState.some(obj => obj.animalId === id) || dislikeState.some(obj => obj.animalId === id)) {
+            return;
+        } else {
+            likeState.push(this.state.animals.filter(({animalId}) => animalId === id)[0]);
+            this.setState({ likes: likeState });
+        };
+    };
+    
+    dislikeHandler = (id) => {
+        let likeState = [...this.state.likes];
+        let dislikeState = [...this.state.dislikes];
+
+        if (likeState.some(obj => obj.animalId === id) || dislikeState.some(obj => obj.animalId === id)) {
+            return;
+        } else {
+            dislikeState.push(this.state.animals.filter(({animalId}) => animalId === id)[0]);
+            this.setState({ dislikes: dislikeState });
+        };
+    };
+
+    discardHandler = (id) => {
+        const discardedAnimal = [...this.state.animals].filter(({animalId}) => animalId !== id);
+        this.setState({ animals: discardedAnimal });
+    }
+
+    deleteLikeHandler = (id) => {
+        const deletedAnimal = [...this.state.likes].filter(({animalId}) => animalId !== id);
+        this.setState({ likes: deletedAnimal});
+    }
+
+    deleteDislikeHandler = (id) => {
+        const deletedAnimal = [...this.state.dislikes].filter(({animalId}) => animalId !== id);
+        this.setState({ dislikes: deletedAnimal});
+    }
+
     render() {
-        let animal = animals.map(({image, type, name, description, animalId}) => {
+        let animal = this.state.animals.map(({image, type, name, description, animalId}) => {
             return (
-                <div className="ui card" key={animalId}>
-                    <div className="image">
-                        <img src={image} alt="..." />
-                    </div>
-                    <div className="content">
-                        <a className="header">{name}</a>
-                        <div className="meta">
-                        <span className="type">{type}</span>
-                        </div>
-                        <div className="description">
-                            {description}
-                        </div>
-                    </div>
-                    <div className="extra content">
-                        <button>Like</button>
-                        <button>Dislike</button>
-                        <button>Discard</button>
-                    </div>
+                <div key={animalId}>
+                    <Card 
+                        image={image}
+                        name={name}
+                        type={type}
+                        description={description}
+                        like={() => this.likeHandler(animalId)}
+                        dislike={() => this.dislikeHandler(animalId)}
+                        discard={() => this.discardHandler(animalId)}
+                    />
                 </div>
-            )
-        })
+            );
+        });
+
         return (
-            <div>
+            <div className='page'>
+            <div className='animal'>
                 {animal}
             </div>
-        )
-    }
+            <Sidebars 
+                likes={this.state.likes}
+                dislikes={this.state.dislikes}
+                deleteLike={this.deleteLikeHandler}
+                deleteDislike={this.deleteDislikeHandler}
+                />
+            </div>
+        );
+    };
 };
 
 export default Animals;
