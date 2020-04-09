@@ -1,5 +1,6 @@
 img {
     width: 200px;
+
 }
 
 .sidecard {
@@ -18,4 +19,9 @@ img {
 
 h3 {
     text-align: center;
+}
+
+p {
+    width: 100px;
+    padding: 40px 0;
 }
