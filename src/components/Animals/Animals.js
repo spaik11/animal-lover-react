@@ -96,6 +96,13 @@ const searchIt = (term) => (item) => item.type.toLowerCase().includes(term.toLow
 class Animals extends Component {
     state = {
         animals: animals,
+        animal: {
+            image: '',
+            type: '',
+            name: '',
+            description: '',
+            animalId: ''
+        },
         likes: [],
         dislikes: [],
         searchTerm: ''
@@ -147,6 +154,33 @@ class Animals extends Component {
         this.setState({ searchTerm: event.target.value });
     };
 
+    formChangeHandler = (event) => {
+        let updatedAnimal = {...this.state.animal};
+        updatedAnimal[event.target.name] = event.target.value;
+        updatedAnimal.animalId = this.state.animals.length + 1;
+        if (updatedAnimal.image === '') {
+            updatedAnimal.image = './images/default-image.jpg';
+        };
+
+        this.setState({ animal: updatedAnimal });
+    };
+
+    handleSubmit = (event) => {
+        event.preventDefault();
+        let clearAnimal = {
+            image: '',
+            type: '',
+            name: '',
+            description: '',
+            animalId: ''
+        };
+        let animalState = [...this.state.animals];
+
+        animalState.push(this.state.animal);
+        this.setState({ animal: clearAnimal, animals: animalState});
+        event.target.reset();
+    }
+
     render() {
         let animal = this.state.animals.filter(searchIt(this.state.searchTerm)).map(({image, type, name, description, animalId}) => {
             return (
@@ -167,6 +201,64 @@ class Animals extends Component {
         return (
             <div className='page'>
                 <div style={{display: 'flex', flexDirection: 'column'}}>
+                <form onSubmit={this.handleSubmit} className="ui form add">
+                    <div className="equal width fields">
+                        <div className="field">
+                            <label>Image</label>
+                            <div className="ui fluid input">
+                                <input 
+                                    type="text" 
+                                    placeholder="Image..." 
+                                    name="image" 
+                                    value={this.state.animal.image} 
+                                    onChange={this.formChangeHandler}/>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="equal width fields">
+                        <div className="field">
+                            <label>Type</label>
+                            <div className="ui fluid input">
+                                <input 
+                                    type="text" 
+                                    placeholder="Type..." 
+                                    name="type" 
+                                    value={this.state.animal.type} 
+                                    onChange={this.formChangeHandler}/>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="equal width fields">
+                        <div className="field">
+                            <label>Name</label>
+                            <div className="ui fluid input">
+                                <input 
+                                    type="text" 
+                                    placeholder="Name..." 
+                                    name="name" 
+                                    value={this.state.animal.name} 
+                                    onChange={this.formChangeHandler}/>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="equal width fields">
+                        <div className="field">
+                            <label>Description</label>
+                            <div className="ui fluid input">
+                                <input 
+                                    type="text" 
+                                    placeholder="Description..." 
+                                    name="description" 
+                                    value={this.state.animal.description} 
+                                    onChange={this.formChangeHandler}/>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="field">
+                        <button className="ui button">Submit</button>
+                    </div>
+                </form>
+                <hr />
                     <div>
                         <form className="ui form search">
                             <div className="field">
