@@ -8,7 +8,7 @@ const CreateAnimal = (props) => {
         name: '',
         description: '',
         animalId: ''
-    })
+    });
 
     const submitHandler = (event) => {
         event.preventDefault();
@@ -27,7 +27,7 @@ const CreateAnimal = (props) => {
 
     return (
         <div>
-        <h4 style={{ marginLeft: '50px' }}>Create Animal</h4>
+        <h2 style={{ marginLeft: '50px' }}>Create Animal</h2>
         <form onSubmit={submitHandler} className="ui form add">
             <div className="equal width fields">
                 <div className="field">

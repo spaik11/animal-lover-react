@@ -60,33 +60,6 @@ class App extends Component {
         this.setState({ searchTerm: event.target.value });
     };
 
-    // formChangeHandler = (event) => {
-    //     let updatedAnimal = {...this.state.animal};
-    //     updatedAnimal[event.target.name] = event.target.value;
-    //     updatedAnimal.animalId = this.state.animals.length + 1;
-    //     if (updatedAnimal.image === '') {
-    //         updatedAnimal.image = './images/default-image.jpg';
-    //     };
-
-    //     this.setState({ animal: updatedAnimal });
-    // };
-
-    // handleSubmit = (event) => {
-    //     event.preventDefault();
-    //     let clearAnimal = {
-    //         image: '',
-    //         type: '',
-    //         name: '',
-    //         description: '',
-    //         animalId: ''
-    //     };
-    //     let animalState = [...this.state.animals];
-
-    //     animalState.push(this.state.animal);
-    //     this.setState({ animal: clearAnimal, animals: animalState});
-    //     event.target.reset();
-    // };
-
     handleCreateAnimalSubmit = (event, animal) => {
         event.preventDefault();
         let updatedAnimals = [animal, ...this.state.animals];
@@ -96,7 +69,7 @@ class App extends Component {
     render() {
         return (
             <div>
-                <h1 style={{paddingTop: '50px', paddingLeft: '50px'}}>Animal Lover</h1>
+                <h1 style={{paddingTop: '50px', paddingLeft: '50px', fontSize: '40px'}}>Animal Lover</h1>
                 <hr />
                 <div className='page'>
                     <div style={{display: 'flex', flexDirection: 'column'}}>
