@@ -2,15 +2,15 @@ import React from 'react';
 import Sidebar from './Sidebar/Sidebar';
 import './Sidebars.css';
 
-const sideBars = (props) => (
+const sideBars = ({ likes, dislikes, deleteLike, deleteDislike }) => (
     <div className='side'>
         <div>
             <h3>Likes</h3>
             <ul style={{listStyleType: 'none'}}>
-                {props.likes.length > 0 ? props.likes.map(({image, name, animalId}) => {
+                {likes.length > 0 ? likes.map(({image, name, animalId}) => {
                     return (
                         <Sidebar key={animalId}>
-                            <div className='sidecard' onClick={() => props.deleteLike(animalId)}>
+                            <div className='sidecard' onClick={() => deleteLike(animalId)}>
                                 <img src={image} alt="..." />
                                 <p>{name}</p>
                             </div>
@@ -22,10 +22,10 @@ const sideBars = (props) => (
         <div>
             <h3>Dislikes</h3>
             <ul style={{listStyleType: 'none'}}>
-            {props.dislikes.length > 0 ? props.dislikes.map(({image, name, animalId}) => {
+            {dislikes.length > 0 ? dislikes.map(({image, name, animalId}) => {
                     return (
                         <Sidebar key={animalId}>
-                            <div className='sidecard' onClick={() => props.deleteDislike(animalId)}>
+                            <div className='sidecard' onClick={() => deleteDislike(animalId)}>
                                 <img src={image} alt="..." />
                                 <p>{name}</p>
                             </div>
@@ -35,8 +35,6 @@ const sideBars = (props) => (
             </ul>
         </div>
     </div>
-)
-
-
+);
 
 export default sideBars;

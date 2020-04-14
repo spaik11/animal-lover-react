@@ -1,0 +1,1 @@
+export const searchIt = (term) => (item) => item.type.toLowerCase().includes(term.toLowerCase());

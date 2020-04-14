@@ -1,23 +1,33 @@
 import React from 'react';
+import Button from '../Button/Button';
 
-const card = (props) => (
+const card = ({ like, dislike, discard, animal: { image, name, type, description, animalId }}) => (
     <div className="ui card">
         <div className="image">
-            <img src={props.image} alt="..." />
+            <img src={image} alt="..." />
         </div>
         <div className="content">
-            <a href="/" className="header">{props.name}</a>
+            <a href="/" className="header">{name}</a>
             <div className="meta">
-            <span className="type">{props.type.slice(0, 1).toUpperCase() + props.type.slice(1)}</span>
+            <span className="type">{type.slice(0, 1).toUpperCase() + type.slice(1)}</span>
             </div>
             <div className="description">
-                {props.description}
+                {description}
             </div>
         </div>
         <div className="extra content">
-            <button onClick={props.like}>Like</button>
-            <button onClick={props.dislike}>Dislike</button>
-            <button onClick={props.discard}>Discard</button>
+            <Button 
+                className= "ui blue button"
+                type= "submit"
+                onClick={() => like(animalId)}>Like</Button>
+            <Button
+                className= "ui blue button"
+                type= "submit"
+                onClick={() => dislike(animalId)}>Dislike</Button>
+            <Button
+                className= "ui red button"
+                type= "submit"
+                onClick={() => discard(animalId)}>Discard</Button>
         </div>
     </div>
 );
